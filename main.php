@@ -26,7 +26,7 @@ header .color {
 }
 
     .content {
-    color: <?= $_COOKIE['color'];?>
+    color: <?= $color;?>;
 }
 </style>
 <body>

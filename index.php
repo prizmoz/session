@@ -1,31 +1,24 @@
 <?php
+error_reporting(E_ALL);
 ob_start();
 session_start();
-if (empty($_GET)) {
+
+if (empty($_COOKIE['color']) && empty($_GET)) {
+    $color = 'black';
     $content = require_once 'content.php';
     require_once 'main.php';
 }
-elseif ($_GET['color'] == 'red') {
-    setcookie('color', 'red');
-    $_SESSION[date('Y:m:d H:i:s')] = 'red';
+elseif (isset($_GET['color'])) {
+    setcookie('color', $_GET['color']);
+    $_SESSION[date('Y:m:d H:i:s')] = $_GET['color'];
     header("Location: /");
 }
-elseif ($_GET['color'] == 'blue') {
-    setcookie('color', 'blue');
-    $_SESSION[date('Y:m:d H:i:s')] = 'blue';
-    header("Location: /");
-}
-elseif ($_GET['color'] == 'green') {
-    setcookie('color', 'green');
-    $_SESSION[date('Y:m:d H:i:s')] = 'green';
-    header("Location: /");
-}
-elseif ($_GET['color'] == 'yellow') {
-    setcookie('color', 'yellow');
-    $_SESSION[date('Y:m:d H:i:s')] = 'yellow';
-    header("Location: /");
-}
-elseif ($_GET['page'] == 'history') {
+elseif (isset($_GET['page']) && $_GET['page'] === 'history') {
     require_once 'history.php';
+    require_once 'main.php';
+}
+elseif (isset($_COOKIE['color'])) {
+    $color = $_COOKIE['color'];
+    $content = require_once 'content.php';
     require_once 'main.php';
 }
